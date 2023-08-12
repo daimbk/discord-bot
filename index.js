@@ -5,6 +5,7 @@ const { token } = require("./config.json");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
+// load and execute commands
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
@@ -26,6 +27,23 @@ for (const folder of commandFolders) {
         `[WARNING] The command at ${filePath} is missing a required "data" or "execute" property.`
       );
     }
+  }
+}
+
+// load and execute events
+const eventsPath = path.join(__dirname, "events");
+const eventFiles = fs
+  .readdirSync(eventsPath)
+  .filter((file) => file.endsWith(".js"));
+
+for (const file of eventFiles) {
+  const filePath = path.join(eventsPath, file);
+  const event = require(filePath);
+
+  if (event.once) {
+    client.once(event.name, (...args) => event.execute(...args));
+  } else {
+    client.on(event.name, (...args) => event.execute(...args));
   }
 }
 
