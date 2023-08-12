@@ -5,5 +5,6 @@ module.exports = {
   once: true,
   execute(client) {
     console.log(`Ready! Logged in as ${client.user.tag}`);
+    // client.application.commands.set([]); used to delete all global slash commands
   },
 };
