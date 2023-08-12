@@ -1,7 +1,7 @@
 const { SlashCommandBuilder } = require("discord.js");
 
 module.exports = {
-  cooldown: 5,
+  cooldown: 3,
   data: new SlashCommandBuilder()
     .setName("avatar")
     .setDescription(
