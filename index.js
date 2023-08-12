@@ -5,8 +5,10 @@ const { token } = require("./config.json");
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
-// load and execute commands
+client.cooldowns = new Collection();
 client.commands = new Collection();
+
+// load and execute commands
 const foldersPath = path.join(__dirname, "commands");
 const commandFolders = fs.readdirSync(foldersPath);
 
